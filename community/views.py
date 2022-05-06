@@ -1,10 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from .serializers import ReviewSerializer
 from .models import Review, Comment
 from .forms import ReviewForm, CommentForm
 from django.core.paginator import Paginator
-
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 @require_GET
 def index(request):
@@ -17,6 +19,16 @@ def index(request):
         'reviews': page_obj,
     }
     return render(request, 'community/index.html', context)
+
+@api_view(['GET'])
+def ajax(request) :
+    reviews = Review.objects.order_by('-pk')
+    paginator = Paginator(reviews,5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    serializer = ReviewSerializer(page_obj,many=True)
+    return Response(serializer.data)
 
 
 @require_http_methods(['GET', 'POST'])
