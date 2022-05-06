@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
 from .forms import CustomUserCreationForm
+from django.http import JsonResponse
 
 
 @require_http_methods(['GET', 'POST'])
@@ -68,6 +69,14 @@ def follow(request, user_pk):
         if person != user:
             if person.followers.filter(pk=user.pk).exists():
                 person.followers.remove(user)
+                liked = False
             else:
                 person.followers.add(user)
+                liked = True
+            context = {
+                'liked': liked,
+                'follower_cnt': person.followers.count(),
+                'following_cnt': person.followings.count(),
+            }
+        return JsonResponse(context)
     return redirect('accounts:profile', person.username)
