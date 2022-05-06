@@ -20,15 +20,15 @@ def index(request):
     }
     return render(request, 'community/index.html', context)
 
-@api_view(['GET'])
-def ajax(request) :
-    reviews = Review.objects.order_by('-pk')
-    paginator = Paginator(reviews,5)
+# @api_view(['GET'])
+# def ajax(request) :
+#     reviews = Review.objects.order_by('-pk')
+#     paginator = Paginator(reviews,5)
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    serializer = ReviewSerializer(page_obj,many=True)
-    return Response(serializer.data)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+#     serializer = ReviewSerializer(page_obj,many=True)
+#     return Response(serializer.data)
 
 
 @require_http_methods(['GET', 'POST'])

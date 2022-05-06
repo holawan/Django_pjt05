@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
-
+{% load bootstrap5 %}
 {% block content %}
   <h1>Community</h1>
   <hr>
+  
   {% for review in reviews %}
+  <div>
     <p>작성자 : <a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></p>
     <p>글 번호: {{ review.pk }}</p>
     <p>글 제목: {{ review.title }}</p>
@@ -23,8 +25,13 @@
     {% endif %}
     <p id="cnt-{{ review.pk }}">{{ review.like_users.all|length }} 명이 이 글을 좋아합니다.</p>
     <a href="{% url 'community:detail' review.pk %}">[detail]</a>
-    <hr>
-  {% endfor %}
+      <hr>
+  </div>
+    {% endfor %}
+
+    <div class="d-flex justify-content-center">
+      {% bootstrap_pagination reviews %}
+    </div>
 {% endblock %}
 
 {% block script %}
@@ -61,20 +68,5 @@
         })
       })
 
-    </script>
-    <script>
-      document.addEventListener('scroll',function(event){
-        const {scrollTop,clientHeight,scrollHeight} = document.documentElement
-        
-        
-        if ((scrollTop+clientHeight) >= scrollHeight -5){
-          axios({
-            method: 'get',
-            url : '/community/?page=2'
-          })
-          .then(res => console.log(res.data))
-          .catch(err => console.error(err))
-        }
-      })
     </script>
 {% endblock script %}
