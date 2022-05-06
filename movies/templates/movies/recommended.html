@@ -2,14 +2,14 @@
 
 {% block content %}
 
-{{main_movie.title}}
+<h1>{{main_movie.title}}</h1>
 <hr>
 {{movies.genre}}
 {% for key, values in movies.items %}
-    {{key}}
+    <h3>{{key}}</h3>
     <hr>
     {% for value in values %}
-      <p>{{value.title}}</p>
+      <p><a class="text-decoration-none" href="{% url 'movies:detail' value.pk %}">{{value.title}}</a></p>
 
     {% endfor %}
     <hr>
