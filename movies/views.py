@@ -30,5 +30,15 @@ def detail(request, movie_pk):
 
 
 @require_safe
-def recommended(request):
-    pass
+def recommended(request,movie_pk):
+    main_movie = get_object_or_404(Movie,pk=movie_pk)
+    genres = main_movie.genres.all()
+    recommend_movies = {}
+    for genre in genres :
+        recommend_movies[genre] = get_list_or_404(Movie,genres=genre.pk)[:10]
+    context = {
+        'movies':recommend_movies,
+        'main_movie':main_movie
+        }
+    
+    return render(request,'movies/recommended.html',context)

@@ -1,4 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+{{main_movie.title}}
+<hr>
+{{movies.genre}}
+{% for key, values in movies.items %}
+    {{key}}
+    <hr>
+    {% for value in values %}
+      <p>{{value.title}}</p>
+
+    {% endfor %}
+    <hr>
+{% endfor %}
 {% endblock %}
