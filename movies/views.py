@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_safe
+from .models import *
 
 
 # Create your views here.
@@ -10,7 +11,8 @@ def index(request):
 
 @require_safe
 def detail(request, movie_pk):
-    pass
+
+    return render(request, 'movies/detail.html')
 
 
 @require_safe
