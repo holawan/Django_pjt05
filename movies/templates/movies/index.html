@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load bootstrap5 %}
 {% block content %}
   <h1>Movies</h1>
   <hr>
@@ -9,5 +9,9 @@
     <a href="{% url 'movies:detail' movie.pk%}"> DETAIL</a>
     <hr>
   {% endfor %}
+  <div class="d-flex justify-content-center">
+    {% bootstrap_pagination movies %}
+  </div>
+
 {% endblock %}
 
