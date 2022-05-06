@@ -35,7 +35,7 @@ def recommended(request,movie_pk):
     genres = main_movie.genres.all()
     recommend_movies = {}
     for genre in genres :
-        recommend_movies[genre] = get_list_or_404(Movie,genres=genre.pk)[:10]
+        recommend_movies[genre] = get_list_or_404(Movie.objects.order_by('-vote_average'),genres=genre.pk)[:10]
     context = {
         'movies':recommend_movies,
         'main_movie':main_movie
