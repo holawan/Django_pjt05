@@ -10,11 +10,14 @@
     <p>글 내용: {{ review.content }}</p>
     {% if user.is_authenticated %}
       <form class="like-form" data-review-pk = "{{ review.pk }}" class="d-inline">
-        {% csrf_token %}
         {% if user in review.like_users.all %}
-          <button>좋아요 취소</button>
+        <button  class="btn" style="background-color : transparent; padding: 0;">
+          <i id="input-{{review.pk}}" class="fa solid fa-heart" style="color:red"></i>
+        </button>
         {% else %}
-          <button>좋아요</button>
+        <button class="btn" style="background-color : transparent; padding: 0;">
+          <i id="input-{{review.pk}}" class="fa regular fa-heart" ></i>
+        </button>
         {% endif %}
       </form>
     {% endif %}
@@ -46,7 +49,14 @@
             const likedCnt = res.data.like_count
             const likeCnt = document.querySelector(`#cnt-${reviewPk}`)
             likeCnt.innerText = `${likedCnt} 명이 이 글을 좋아합니다.`
-
+            const input = document.querySelector(`#input-${reviewPk}`)
+            input.setAttribute("class","fa solid fa-heart")
+            if (liked === true) {
+              input.setAttribute("style","color:red")
+            }else {
+              input.setAttribute("style",'color:black')
+            }
+            
           })
         })
       })
