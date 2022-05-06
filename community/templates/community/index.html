@@ -67,6 +67,13 @@
           })
         })
       })
+      var user_is_authenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
+      if (user_is_authenticated === true) {
+        console.log('true')
+      }
+      else {
+        console.log('false')
+      }
 
     </script>
 {% endblock script %}
