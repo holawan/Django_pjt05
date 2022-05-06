@@ -2,4 +2,12 @@
 
 {% block content %}
   <h1>Movies</h1>
+  <hr>
+  {% for movie in movies %}
+    <h2>{{ movie.title }}</h2>
+    <p>{{ movie.overview }}</p>
+    <a href="{% url 'movies:detail' movie.pk%}"> DETAIL</a>
+    <hr>
+  {% endfor %}
 {% endblock %}
+
